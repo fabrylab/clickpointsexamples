@@ -1,0 +1,15 @@
+""" Marker """
+types = {0: ["bird",    [255,266,  0], TYPE_Normal],
+         1: ["adult",   [  0,  0,128], TYPE_Normal],
+         2: ["juvenile",[255,  0,  0], TYPE_Normal]
+         }
+
+tracking = True
+tracking_show_trailing = -1
+tracking_show_leading = 0
+
+""" Mask """
+draw_types = []
+
+""" GammaCorrection """
+gamma_corretion_hide = True
