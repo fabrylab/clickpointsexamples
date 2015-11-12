@@ -1,11 +1,13 @@
 from __future__ import print_function, division
 import sys
 import numpy as np
-from scipy.misc import imread
+from imageio import imread
 import cv2
 
-from clickpoints.SendCommands import JumpToFrame, GetImageName, GetMarkerName
+from clickpoints.SendCommands import JumpToFrame, GetImageName, GetMarkerName, HasTerminateSignal, CatchTerminateSignal
 from clickpoints.MarkerLoad import LoadLogIDindexed, SaveLog
+
+CatchTerminateSignal()
 
 lk_params = dict(winSize=(8, 8), maxLevel=0, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
@@ -19,12 +21,12 @@ if len(tracking_ids) == 0:
     sys.exit(-1)
 
 for frame in range(start_frame, start_frame+800):
-    p0 = np.array([[points[id]["x"], points[id]["y"]] for id in tracking_ids]).astype(np.float32)
-    try:
-        image_next = imread(GetImageName(frame+1))
-    except IOError:
+    next_image = GetImageName(frame+1)
+    if next_image == "":
         print("Finished")
         break
+    image_next = imread(GetImageName(frame+1))
+    p0 = np.array([[points[id]["x"], points[id]["y"]] for id in tracking_ids]).astype(np.float32)
     print("Tracking frame number", frame)
     p1, st, err = cv2.calcOpticalFlowPyrLK(image_current, image_next, p0, None, **lk_params)
     points2 = {}
@@ -45,4 +47,7 @@ for frame in range(start_frame, start_frame+800):
 
     points = points_new
     image_current = image_next
+    if HasTerminateSignal():
+        print("Terminating Tracking")
+        sys.exit(0)
 
