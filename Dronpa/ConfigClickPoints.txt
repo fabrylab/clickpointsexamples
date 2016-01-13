@@ -23,3 +23,6 @@ timeline_hide = True
 
 """ ScriptLauncher """
 launch_scripts = [r"GetIntensities.py"]
+
+filename_data_regex = r'.*(?P<experiment>\d*)-(?P<time>\d?)min'
+info_hud_string = "{regex[time]} min"
