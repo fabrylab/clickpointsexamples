@@ -6,7 +6,7 @@ import cv2
 import os
 import time
 
-from clickpoints.SendCommands import HasTerminateSignal, CatchTerminateSignal, GetImage, JumpToFrameWait
+from clickpoints.SendCommands import HasTerminateSignal, CatchTerminateSignal, GetImage, JumpToFrameWait, ReloadMarker
 from clickpoints.MarkerLoad import GetMarker, SetMarker
 
 CatchTerminateSignal()
@@ -35,8 +35,9 @@ while True:
     p1, st, err = cv2.calcOpticalFlowPyrLK(image_current, image_next, p0, None, **lk_params)
 
     SetMarker(image=image_id, image_frame=image_frame, x=p1[:, 0], y=p1[:, 1], processed=0, type=types, track=tracking_ids)
-    JumpToFrameWait(frame+1)
     SetMarker(image=last_image_id, image_frame=last_image_frame, processed=1, type=types, track=tracking_ids)
+    ReloadMarker(frame+1)
+    JumpToFrameWait(frame+1)
 
     p0 = p1
     last_image_id = image_id
