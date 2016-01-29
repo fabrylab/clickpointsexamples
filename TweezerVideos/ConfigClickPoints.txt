@@ -1,5 +1,5 @@
 """ Marker """
-types = {0: ["beads", [255, 0, 0], TYPE_Normal]}
+types = {0: ["points", [0, 255, 0], TYPE_Normal], 1: ["tracks", [0, 128, 128], TYPE_Track]}
 
 tracking = True
 tracking_show_trailing = -1
