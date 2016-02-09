@@ -1,5 +1,5 @@
 """ Marker """
-types = {0: ["bird",    [255,266,  0], TYPE_Normal],
+types = {0: ["bird",    [255,255,  0], TYPE_Normal],
          1: ["adult",   [  0,  0,128], TYPE_Normal],
          2: ["juvenile",[255,  0,  0], TYPE_Normal]
          }
