@@ -7,8 +7,9 @@ import os
 import time
 
 from clickpoints.SendCommands import HasTerminateSignal, CatchTerminateSignal, GetImage, JumpToFrameWait, ReloadMarker
-from clickpoints.MarkerLoad import GetMarker, SetMarker
+from clickpoints.MarkerLoad import DataFile
 
+df = DataFile()
 CatchTerminateSignal()
 
 lk_params = dict(winSize=(8, 8), maxLevel=0, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
@@ -16,9 +17,9 @@ lk_params = dict(winSize=(8, 8), maxLevel=0, criteria=(cv2.TERM_CRITERIA_EPS | c
 start_frame = int(sys.argv[2])
 
 image_current, last_image_id, last_image_frame = GetImage(start_frame)
-points = GetMarker(image=last_image_id, image_frame=last_image_frame, processed=0)
-p0 = np.array([[point.x, point.y] for point in points]).astype(np.float32)
-tracking_ids = [point.track_id for point in points]
+points = df.GetMarker(image=last_image_id, image_frame=last_image_frame, processed=0)
+p0 = np.array([[point.x, point.y] for point in points if point.track_id]).astype(np.float32)
+tracking_ids = [point.track_id for point in points if point.track_id]
 types = [point.type_id for point in points]
 
 if len(tracking_ids) == 0:
@@ -34,8 +35,8 @@ while True:
     print("Tracking frame number", frame, ",", len(tracking_ids), "tracks")
     p1, st, err = cv2.calcOpticalFlowPyrLK(image_current, image_next, p0, None, **lk_params)
 
-    SetMarker(image=image_id, image_frame=image_frame, x=p1[:, 0], y=p1[:, 1], processed=0, type=types, track=tracking_ids)
-    SetMarker(image=last_image_id, image_frame=last_image_frame, processed=1, type=types, track=tracking_ids)
+    df.SetMarker(image=image_id, image_frame=image_frame, x=p1[:, 0], y=p1[:, 1], processed=0, type=types, track=tracking_ids)
+    df.SetMarker(image=last_image_id, image_frame=last_image_frame, processed=1, type=types, track=tracking_ids)
     ReloadMarker(frame+1)
     JumpToFrameWait(frame+1)
 
