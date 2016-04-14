@@ -31,15 +31,15 @@ for image in images:
     green_channel = image.data[:, :, 1]
 
     # sum the pixel intensities for every channel
-    intensities.append([np.mean(green_channel[mask == type.index]) for type in mask_types])
+    intensities.append([np.mean(green_channel[mask == mask_type.index]) for mask_type in mask_types])
 
 # convert lists to numpy arrays
 intensities = np.array(intensities).T
 times = np.array(times)
 
 # iterate over cells
-for type, cell_int in zip(mask_types, intensities):
-    plt.plot(times, cell_int, "-s", label=type.name)
+for mask_type, cell_int in zip(mask_types, intensities):
+    plt.plot(times, cell_int, "-s", label=mask_type.name)
 
 # add legend and labels
 plt.legend()
