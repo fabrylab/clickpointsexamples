@@ -37,7 +37,7 @@ if len(tracking_ids) == 0:
 frame = start_frame
 while True:
     image_data_next, image_id_next = com.GetImage(frame+1)
-    if image_next is None:
+    if image_data_next is None:
         print("Reached end")
         break
 
