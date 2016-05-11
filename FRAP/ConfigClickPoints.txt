@@ -1,0 +1,2 @@
+""" ScriptLauncher """
+launch_scripts = [r"FRAP.py"]

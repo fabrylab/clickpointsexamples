@@ -9,7 +9,7 @@ tracking_show_trailing = -1
 tracking_show_leading = 0
 
 """ Mask """
-draw_types = []
+#draw_types = []
 
 """ GammaCorrection """
 gamma_corretion_hide = True
