@@ -16,7 +16,7 @@ db = clickpoints.DataFile("sim.cdb", "w")
 type_point = db.AddType("point", "#FF0000", mode=db.TYPE_Track)
 
 # Create track instances
-tracks = db.AddTracks(N)
+tracks = db.AddTracks(N, type_point)
 
 # Create initial positions
 points = np.random.rand(N, 2)*size
@@ -31,11 +31,11 @@ for i in range(frame_count):
     points += np.random.rand(N, 2)-0.5
 
     # Save the new positions
-    db.SetMarker(image=image, x=points[:, 0], y=points[:, 1], type=type_point, track=tracks)
+    db.SetMarker(image=image, x=points[:, 0], y=points[:, 1], track=tracks)
 
 # plot the results
 for track in tracks:
-    plt.plot(track.points()[:, 0], track.points()[:, 1], '-')
+    plt.plot(track.points[:, 0], track.points[:, 1], '-')
 plt.xlim(0, size)
 plt.ylim(size, 0)
 plt.show()
