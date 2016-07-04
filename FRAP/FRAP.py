@@ -38,12 +38,12 @@ for image in images:
     # go through all bleach regions and extract the mean intensity
     bleach_values = []
     for bleach_rect in rects_bleach:
-        bleach_values.append(np.mean(image.data[bleach_rect.y1:bleach_rect.y2, bleach_rect.x1:bleach_rect.x2]))
+        bleach_values.append(np.mean(image.data[bleach_rect.slice_y, bleach_rect.slice_x]))
     bleach.append(bleach_values)
     # go through all the background regions and sum up the mean intensity
     background_value = 0
     for background_rect in rects_background:
-        background_value += np.mean(image.data[background_rect.y1:background_rect.y2, background_rect.x1:background_rect.x2])
+        background_value += np.mean(image.data[background_rect.slice_y, background_rect.slice_x])
     background.append(background_value/len(rects_background))
 
 # subtract the mean background from all bleach intensities
