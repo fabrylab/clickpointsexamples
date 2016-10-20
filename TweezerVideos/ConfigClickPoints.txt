@@ -12,11 +12,11 @@ draw_types = []
 gamma_corretion_hide = True
 
 """ Timeline """
-fps = 25
+fps = 25.2
 timeline_hide = True
 
 """ FolderBrowser """
 folder_list = [r"..\*\\"]
 
 """ ScriptLauncher """
-launch_scripts = [r"Track.py", r"Evaluation.py"]
+scripts = [r"Track.py", r"Evaluation.py"]

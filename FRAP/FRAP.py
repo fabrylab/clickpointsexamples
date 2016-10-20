@@ -11,16 +11,16 @@ db = clickpoints.DataFile(database)
 com = clickpoints.Commands(port)
 
 # Check if the marker types are present
-if not db.GetType("FRAP_bleach"):
-    db.AddType("FRAP_bleach", [0, 255, 0], db.TYPE_Rect)
+if not db.getMarkerType("FRAP_bleach"):
+    db.addMarkerType("FRAP_bleach", [0, 255, 0], db.TYPE_Rect)
     com.ReloadTypes()
-if not db.GetType("FRAP_background"):
-    db.AddType("FRAP_background", [0, 128, 0], db.TYPE_Rect)
+if not db.getMarkerType("FRAP_background"):
+    db.addMarkerType("FRAP_background", [0, 128, 0], db.TYPE_Rect)
     com.ReloadTypes()
 
 # try to load marker
-rects_bleach = db.GetRectangles(type_name="FRAP_bleach")
-rects_background = db.GetRectangles(type_name="FRAP_background")
+rects_bleach = db.getRectangles(type="FRAP_bleach")
+rects_background = db.getRectangles(type="FRAP_background")
 
 # check if we have at least one bleach region
 if len(rects_bleach) < 1:
@@ -28,7 +28,7 @@ if len(rects_bleach) < 1:
     sys.exit(-1)
 
 # get all the images
-images = db.GetImages()
+images = db.getImages()
 
 # define empty lists
 bleach = []  # bleach should store for each bleach region the mean intensity over time
@@ -38,12 +38,12 @@ for image in images:
     # go through all bleach regions and extract the mean intensity
     bleach_values = []
     for bleach_rect in rects_bleach:
-        bleach_values.append(np.mean(image.data[bleach_rect.slice_y, bleach_rect.slice_x]))
+        bleach_values.append(np.mean(image.data[bleach_rect.slice_y(), bleach_rect.slice_x()]))
     bleach.append(bleach_values)
     # go through all the background regions and sum up the mean intensity
     background_value = 0
     for background_rect in rects_background:
-        background_value += np.mean(image.data[background_rect.slice_y, background_rect.slice_x])
+        background_value += np.mean(image.data[background_rect.slice_y(), background_rect.slice_x()])
     background.append(background_value/len(rects_background))
 
 # subtract the mean background from all bleach intensities

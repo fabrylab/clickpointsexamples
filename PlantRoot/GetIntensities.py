@@ -6,11 +6,13 @@ from matplotlib import pyplot as plt
 # connect to ClickPoints database
 # database filename is supplied as command line argument when started from ClickPoints
 import clickpoints
-db = clickpoints.DataFile()
+start_frame, database, port = clickpoints.GetCommandLineArgs()
+db = clickpoints.DataFile(database)
+com = clickpoints.Commands(port, catch_terminate_signal=True)
 
 # get images and mask_types
-images = db.GetImages()
-mask_types = db.GetMaskTypes()
+images = db.getImages()
+mask_types = db.getMaskTypes()
 
 # regular expression to get time from filename
 regex = re.compile(r".*(?P<experiment>\d*)-(?P<time>\d*)min")
