@@ -19,4 +19,4 @@ timeline_hide = True
 folder_list = [r"..\*\\"]
 
 """ ScriptLauncher """
-scripts = [r"Track.py", r"Evaluation.py"]
+#scripts = [r"Track.py", r"Evaluation.py"]
