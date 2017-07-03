@@ -1,0 +1,4 @@
+[addon]
+name=Frap
+file=frap.py
+icon=fa.sun-o

@@ -1,2 +1,0 @@
-""" ScriptLauncher """
-scripts = [r"FRAP.py"]
