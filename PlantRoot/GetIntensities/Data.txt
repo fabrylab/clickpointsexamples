@@ -1,0 +1,4 @@
+[addon]
+name=GetIntensities
+file=GetIntensities.py
+description=
